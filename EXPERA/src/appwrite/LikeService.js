@@ -35,15 +35,18 @@ class LikeService {
 
     async isLiked(queries){
         try {
-            await clientService.databases.listDocuments(
+            const likes = await clientService.databases.listDocuments(
                 conf.appwriteDatabaseId,
                 conf.appWriteCollectionLikesId,
                 queries
             )
+            if(likes){
+                return likes;
+            }
         } catch (error) {
             console.log("APPWRITE :: isLiked",error);
         }
     }
-
+}
 const likeService = new LikeService();
 export default likeService;
