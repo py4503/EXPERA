@@ -1,5 +1,5 @@
 import { clientService } from "./ClientService";
-import { ID } from "appwrite";
+import { ID, Query } from "appwrite";
 import conf from "../conf/conf";
 
 class LikeService {
@@ -21,10 +21,20 @@ class LikeService {
 
     async unRegisterLike({slug, userId}){
         try {
+            const queries = [Query.and([
+                Query.equal('slug', slug),
+                Query.equal('userId', userId),
+            ])]
+            const doc = await clientService.databases.listDocuments(
+                conf.appwriteDatabaseId,
+                conf.appWriteCollectionLikesId,
+                queries
+            )
+            const docId = doc.documents[0].$id;
             await clientService.databases.deleteDocument(
                 conf.appwriteDatabaseId,
                 conf.appWriteCollectionLikesId,
-                slug
+                docId
             )
             return true;
         } catch (error) {
