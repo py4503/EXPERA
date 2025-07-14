@@ -1,1 +1,155 @@
-@import "tailwindcss";  
+@import url('https://fonts.googleapis.com/css2?family=Oswald&family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Lato:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import "tailwindcss";
+
+/*------------------------------
+  Print Optimization
+-------------------------------*/
+@media print {
+  body {
+    margin: 0 !important;
+  }
+}
+
+/*------------------------------
+  Root Variables
+-------------------------------*/
+:root {
+  --ck-content-font-family: 'Lato', sans-serif;
+  --ck-heading-font-family: 'Oswald', sans-serif;
+}
+
+/*------------------------------
+  Layout + Container
+-------------------------------*/
+
+.ck-content {
+  background-color: #1e1e1e;
+  color: #000;
+  font-family: sans-serif;
+  min-height: 400px; 
+}
+
+.main-container {
+  font-family: var(--ck-content-font-family);
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.editor-container_classic-editor .editor-container__editor {
+  width: 795px;
+  max-width: 100%;
+}
+
+/*------------------------------
+  Heading Styles
+-------------------------------*/
+.ck-content h2.document-title,
+.ck-content h3.document-subtitle,
+.ck-content h3.category {
+  font-family: var(--ck-heading-font-family);
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+}
+
+.ck-content h3.category {
+  font-size: 20px;
+  letter-spacing: 10px;
+  color: #555;
+}
+
+.ck-content h2.document-title {
+  font-size: 50px;
+  border: none;
+}
+
+.ck-content h3.document-subtitle {
+  font-size: 20px;
+  color: #555;
+  margin-bottom: 1em;
+}
+
+/*------------------------------
+  Info Box Style
+-------------------------------*/
+.ck-content p.info-box {
+  --background-size: 30px;
+  --background-color: #e91e63;
+
+  padding: 1.2em 2em;
+  margin: 1.5em 2em;
+  border: 1px solid var(--background-color);
+  border-radius: 10px;
+  background:
+    linear-gradient(135deg, var(--background-color) 0%, var(--background-color) var(--background-size), transparent var(--background-size)),
+    linear-gradient(135deg, transparent calc(100% - var(--background-size)), var(--background-color) calc(100% - var(--background-size)), var(--background-color));
+  box-shadow: 5px 5px 0 #ffe6ef;
+}
+
+/*------------------------------
+  Inline Styles
+-------------------------------*/
+.ck-content span.marker {
+  background: yellow;
+}
+
+.ck-content span.spoiler {
+  background: #000;
+  color: #000;
+}
+
+.ck-content span.spoiler:hover {
+  color: #fff;
+}
+
+/*------------------------------
+  Buttons
+-------------------------------*/
+.ck-content .button {
+  display: inline-block;
+  width: 260px;
+  padding: 12px;
+  margin: 0 auto;
+  font-size: 24px;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 8px;
+  color: #fff;
+}
+
+.ck-content .button--green {
+  background-color: #406b1e;
+}
+
+.ck-content .button--black {
+  background-color: #141517;
+}
+
+/*------------------------------
+  Word Count Panel
+-------------------------------*/
+.editor_container__word-count .ck-word-count {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--ck-spacing-small);
+  padding: var(--ck-spacing-small) var(--ck-spacing-standard);
+  height: 20px;
+  font-size: var(--ck-font-size-base);
+  line-height: var(--ck-line-height-base);
+  font-family: var(--ck-font-face);
+  color: var(--ck-color-text);
+}
+
+.editor-container_include-word-count.editor-container_classic-editor .editor_container__word-count {
+  border: 1px solid var(--ck-color-base-border);
+  border-radius: 0 0 var(--ck-border-radius) var(--ck-border-radius);
+  border-top: none;
+}
+
+/* Remove top rounding from editor if word count is shown below */
+.editor-container_include-word-count.editor-container_classic-editor 
+.editor-container__editor .ck-editor .ck-editor__editable {
+  border-radius: 0;
+}
+

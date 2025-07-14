@@ -10,13 +10,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-react": "^11.0.0",
     "@reduxjs/toolkit": "^2.8.2",
     "@tailwindcss/vite": "^4.1.11",
+    "@tiptap/extension-image": "^3.0.1",
+    "@tiptap/extension-link": "^3.0.1",
     "@tiptap/extension-underline": "^3.0.1",
     "@tiptap/pm": "^3.0.1",
     "@tiptap/react": "^3.0.1",
     "@tiptap/starter-kit": "^3.0.1",
     "appwrite": "^18.1.1",
+    "ckeditor5": "^46.0.0",
     "framer-motion": "^12.23.3",
     "html-react-parser": "^5.2.5",
     "lottie-react": "^2.4.1",
