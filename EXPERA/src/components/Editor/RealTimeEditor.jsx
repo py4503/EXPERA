@@ -81,7 +81,7 @@ import {
 
 import 'ckeditor5/ckeditor5.css';
 
-function RTE({ name = 'content', control, label, defaultValue = '' }) {
+function RTE({ name, control, label, defaultValue = '' }) {
   const wordCountRef = useRef(null);
   const [ready, setReady] = useState(false);
 

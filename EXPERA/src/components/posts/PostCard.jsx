@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import likeService from '../../appwrite/LikeService';
 import { Query } from 'appwrite';
 import postService from '../../appwrite/PostService';
+import { Link } from 'react-router-dom';
 
 function PostCard({ userName, slug, title, userId, featuredImage }) {
   
@@ -46,6 +47,7 @@ function PostCard({ userName, slug, title, userId, featuredImage }) {
     <div className="max-w-md w-full mx-auto bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300">
       
       {/* Post Image */}
+      <Link to={`/post/${slug}`}>
       <div className="relative w-full h-70 bg-gray-100 overflow-hidden group">
         <img
           src={postService.getFile(featuredImage)}
@@ -76,6 +78,7 @@ function PostCard({ userName, slug, title, userId, featuredImage }) {
           <p className="text-lg font-semibold text-gray-800">{title}</p>
         </div>
       </div>
+      </Link>
       {/* Like Button */}
 <div className="px-4 pb-4 flex items-center gap-2">
   <button
