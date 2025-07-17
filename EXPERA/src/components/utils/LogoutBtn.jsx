@@ -5,11 +5,14 @@ import { useDispatch } from 'react-redux';
 import {logout as storeLogout} from '../../store/authSlice'
 
 function LogoutBtn() {
+    
+    const dispatch = useDispatch();
 
-    const logoutHandler = async() => {
-        await authService.logout()
+    const logoutHandler = () => {
+        authService.logout()
         .then(() => {
-            useDispatch(storeLogout());
+            dispatch(storeLogout());
+            Navigate('/')
         })
         .catch(() => {
             console.log("Error logging out")

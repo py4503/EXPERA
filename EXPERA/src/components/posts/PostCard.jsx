@@ -3,31 +3,40 @@ import likeService from '../../appwrite/LikeService';
 import { Query } from 'appwrite';
 import postService from '../../appwrite/PostService';
 import { Link } from 'react-router-dom';
+import profile from '../../assets/profile.png'
+import { useSelector } from 'react-redux';
 
-function PostCard({ userName, slug, title, userId, featuredImage }) {
+function PostCard({ $id, userName, title, userId, featuredImage }) {
   
   const [likes, setLikes] = useState(0);
   const [userLiked, setUserLiked] = useState(false);
-  
+  console.log("Post card ::",$id);
+  const slug = $id;
+  const currentUserId = useSelector((state) => state.auth.userData.$id);
   useEffect(() => {
+    console.log("in likes")
     const getLikes = async() => {
       const query = [Query.equal('slug', slug)];
       const like_count = await likeService.isLiked(query);
+      console.log("like count ::",like_count)
       if(like_count){
-        setLikes(like_count);
+        setLikes(like_count.documents.length);
       }
     }
-    const isLiked = async() => {
+    const isLikedc = async() => {
       const query = [Query.and([
         Query.equal('userId',userId),
         Query.equal('slug',slug)
       ])]
 
       const liked = await likeService.isLiked(query);
-      if(liked){
+      console.log("liked ::", liked)
+      if(liked.userId == currentUserId){
         setUserLiked(true);
       }
     }
+    getLikes();
+    isLikedc();
   }, []);
   
   const handleLike = async() => {
@@ -65,7 +74,7 @@ function PostCard({ userName, slug, title, userId, featuredImage }) {
             <div className="group relative transition duration-500 hover:ring-3 hover:ring-blue-300 rounded-3xl">
 
           <img
-            src={profileImage}
+            src={profile}
             alt={userName}
             className="w-14 h-14 rounded-full border-2 border-white shadow-md"
           />

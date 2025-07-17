@@ -14,6 +14,7 @@ function Button({
              shadow-md hover:shadow-lg transition-all duration-200 ease-in-out
              hover:bg-zinc-800 active:scale-95
              focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-zinc-700 ${className}`}
+             {...props}
 
 >
   <span className="transition-transform duration-200 group-hover:translate-x-0.5">

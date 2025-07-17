@@ -1,25 +1,26 @@
 import React, { useEffect, useState } from 'react'
-import postService from '../appwrite/PostService'
+import postService from '../appwrite/PostService';
+import { Query } from 'appwrite';
+import { useSelector } from 'react-redux';
 import { PostCard } from '../components';
 
-function AllPost() {
+function UserPosts() {
     const [posts, setPosts] = useState([]);
+    const userId = useSelector((state) => state.auth.userData.$id)
+    const queries = [Query.equal('userId', userId)]
 
     useEffect(() => {
-        try {
-            postService.getAllPosts()
-            .then((posts) => {
-                if(posts){
-                console.log("all posts ::",posts.documents)
-                setPosts(posts.documents);
-                }
-            })
-            .catch(() => console.log("ALL - POSTS ::",error))
-        } catch (error) {
-            console.log("Error while loading posts", error);
-        }
-    }, [])
-  return (
+        postService.getAllPosts(queries)
+        .then((post) => {
+            if(post){
+                console.log("user posts ::", post.documents)
+                setPosts(post.documents);
+            }
+        })
+        .catch((error) => console.log("user has no post to display", error));
+    }, []);
+
+  return posts? (
     <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* heading */}
         <div className="mb-10 text-center">
@@ -39,7 +40,7 @@ function AllPost() {
       </div>
        
     </section>
-  )
+  ) : (<p>no post found...</p>);
 }
 
-export default AllPost
+export default UserPosts

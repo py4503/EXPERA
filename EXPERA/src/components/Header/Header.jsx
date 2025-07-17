@@ -8,6 +8,12 @@ import LogoutBtn from '../utils/LogoutBtn';
 function Header() {
     const [mobileOpen, setMobileOpen] = useState(false);
     const authStatus = useSelector((state) => state.auth.status);
+    if(authStatus){
+      console.log("User logged in");
+    }
+    else{
+      console.log("User not logged in");
+    }
   const navItems = [
     {
         name:'Home',
@@ -26,7 +32,7 @@ function Header() {
     },
     {
         name:"Create",
-        path:'/Add-post',
+        path:'/add-post',
         status:authStatus
     },
     {
@@ -67,10 +73,11 @@ function Header() {
           </nav>
 
         {/* session logout */}
-
-          <div className="flex items-center gap-4">
+          {authStatus && (
+            <div className="flex items-center gap-4">
             <LogoutBtn/>
-          </div>
+            </div>
+          )}
         </div>
       </div>
     </header>

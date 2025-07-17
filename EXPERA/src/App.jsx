@@ -1,18 +1,35 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
-import RealTimeEditor from './components/Editor/RealTimeEditor'
-import { useForm } from 'react-hook-form'
+import { Outlet, useNavigate } from 'react-router-dom'
+import { Header } from './components'
+import authService from './appwrite/AuthService';
+import { useDispatch } from 'react-redux';
+import { login, logout } from './store/authSlice';
 
 function App() {
-  const [count, setCount] = useState(0)
-  const {control} = useForm();
-  return (
+  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch()
+  useEffect(() => {
+    authService.getCurrentUser()
+    .then((user) => {
+      if(user){
+      dispatch(login(user))
+      }
+      else{
+        dispatch(logout())
+      }
+    })
+    .catch((error) => console.log("APP :: ",error))
+    .finally(() => setLoading(false))
+  }, [])
+  return !loading? (
     <>
-    <div className='w-2xl rounded-2xl overflow-hidden border-2'>
-    <RealTimeEditor control={control}/>
-    </div>
+    <Header/>
+    <main>
+      <Outlet/>
+    </main>
     </>
-  )
+  ) : (<p>Loading...</p>)
 }
 
 export default App

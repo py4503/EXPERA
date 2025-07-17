@@ -3,7 +3,8 @@ import conf from "../conf/conf";
 import { clientService } from "./ClientService";
 
 class PostService {
-    async createPost({ title, content, status, featuredImage, userId, slug }) {
+    async createPost({ title, content, status, featuredImage, userId, slug, userName }) {
+        console.log("Create post data ::","title:",title,"content:",content,"userName:",userName)
         try {
             const post = await clientService.databases.createDocument(
                 conf.appwriteDatabaseId,
@@ -14,7 +15,8 @@ class PostService {
                     content,
                     status,
                     featuredImage,
-                    userId
+                    userId,
+                    userName
                 }
             )
 
@@ -77,7 +79,7 @@ class PostService {
         }
     }
 
-    async getAllPosts(queries = [Query.equal('status', 'active')]) {
+    async getAllPosts(queries = [Query.equal('status', 'publish')]) {
         try {
             const posts = await clientService.databases.listDocuments(
                 conf.appwriteDatabaseId,

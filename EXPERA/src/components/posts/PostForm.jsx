@@ -1,28 +1,29 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import { Upload, CheckCircle2, Pencil } from "lucide-react";
 import Lottie  from 'lottie-react'
 import RightImage from '../../assets/Loading 40 _ Paperplane.json'
 import {useForm} from 'react-hook-form'
 import Input from "../utils/Input";
-import RTE from '../index'
-import Select from "../index";
+import {RTE, Select} from '../index'
 import postService from "../../appwrite/PostService";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-export default function PostForm({post}) {
+export default function PostForm(post) {
   
+    console.log("post form ::",post);
     const userData = useSelector((state) => state.auth.userData);
+    console.log("user data:", post.title);
     const navigate = useNavigate();
     const [imagePreview, setImagePreview] = useState('');
 
     const {handleSubmit, watch, control, setValue, getValues, register} = useForm({
         defaultValues:{
-            title: post.title || '',
-            content: post.content || '',
-            status: post.status || '',
-            slug: post.slug || 'active',
+            title: post?.title || '',
+            content: post?.content || '',
+            status: post?.status || 'publish',
+            slug: post?.slug || '',
         }
     })
 
@@ -47,22 +48,24 @@ export default function PostForm({post}) {
         else{
             const file = data?.file[0];
             const fileId = await postService.uploadFile(file);
-
+            console.log("fileId:",fileId);
             if(fileId){
-              data.featuredImage = fileId;
-              data.userName = userData.Name
+              data.featuredImage = fileId.$id;
+              data.userName = userData.name;
+              data.userId = userData.$id;
+              console.log("post form final data ::",data);
               setImagePreview(fileId)
               const post = await postService.createPost(data);
               if(post){
-                navigate(`/post/${slug}`)
+                navigate(`/post/${data.slug}`)
               }
             }
         }
 
     }
 
-    const slugTransform = (slug) => {
-        if(slug){
+    const slugTransform = useCallback((slug) => {
+        if(slug && typeof slug === 'string'){
           return slug
           .trim()
           .toLowerCase()
@@ -72,7 +75,7 @@ export default function PostForm({post}) {
           .replace(/^-+|-+$/g, '');           
         }
         return "";
-    }
+    },[])
 
     useEffect(() => {
         const subscription = watch((value, {name}) => {
@@ -101,9 +104,8 @@ export default function PostForm({post}) {
         <Input
           type="text"
           // className="mt-1 w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
-          value={title}
           placeholder="title..."
-          {...required('title',{
+          {...register('title',{
             required:true
           })}
         />
@@ -115,7 +117,6 @@ export default function PostForm({post}) {
         <Input
           type="text"
           // className="mt-1 w-full border border-gray-300 rounded-xl px-4 py-2 bg-gray-100 text-gray-600"
-          value={slug}
           {...register('slug',{
             required:true
           })}
@@ -168,8 +169,8 @@ export default function PostForm({post}) {
           // className="mt-1 w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-blue-500 transition"
           // value={status}
           label = 'Status'
-          options = {["draft", 'published']}
-          default = 'published'
+          options = {["draft", 'publish']}
+          defaultV = 'publish'
           {...register('status',{
             required:true
           })}
@@ -183,12 +184,12 @@ export default function PostForm({post}) {
         whileTap={{ scale: 0.98 }}
         className={`w-full flex items-center justify-center gap-2 px-6 py-3 text-white font-semibold rounded-xl shadow-lg transition
           ${
-            isUpdate
+            post
               ? "bg-green-500 hover:bg-green-600"
               : "bg-blue-600 hover:bg-blue-700"
           }`}
       >
-        {isUpdate ? (
+        {post ? (
           <>
             <CheckCircle2 className="w-5 h-5" /> Update Post
           </>

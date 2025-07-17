@@ -4,6 +4,8 @@ import { login as storeLogin } from '../../store/authSlice'
 import authService from '../../appwrite/AuthService'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import {Input, Button} from '../index'
 
 function Signup() {
     const {register, handleSubmit, formState:{errors}} = useForm();
@@ -15,8 +17,9 @@ function Signup() {
         setError('')
        try {
          if(data){
-             const session = await authService.createAccount({data})
+             const session = await authService.createAccount(data)
             // .createAccount will give session Id
+            console.log("Signup data ::",data);
             console.log("Signup :: session ::", session);
              if(session){
                 const user = await authService.getCurrentUser(session);

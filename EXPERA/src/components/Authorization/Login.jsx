@@ -4,13 +4,14 @@ import { useDispatch } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import authService from '../../appwrite/AuthService';
 import { login } from '../../store/authSlice';
+import { Link } from 'react-router-dom';
+import {Input, Button} from '../index'
 
 function Login() {
     const {register, handleSubmit, formState:{errors}} = useForm();
     const [error, setError] = useState('');
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
     const handleLogin = async(data) => {
         try {
             const session = await authService.login(data);
@@ -45,7 +46,7 @@ function Login() {
           <div>
             {error}
           </div>
-          <form onSubmit={handleSubmit(Login)}  className="space-y-6">
+          <form onSubmit={handleSubmit(handleLogin)}  className="space-y-6">
             {/* <div>
               <label className="block text-gray-700 mb-1">Name</label>
               <Input

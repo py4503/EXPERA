@@ -5,7 +5,7 @@ import { clientService } from "./ClientService";
 class AuthService{
     async createAccount({email, password, name}){
         try {
-            const account = await clientService.account.createEmailPasswordSession(
+            const account = await clientService.account.create(
                 ID.unique(),
                 email,
                 password,
@@ -35,8 +35,7 @@ class AuthService{
     }
     async logout(){
         try {
-            await clientService.account.deleteSessions();
-            return true;
+            return await clientService.account.deleteSessions();
         } catch (error) {
             console.log("APPWRITE :: logout", error);
             return false;
