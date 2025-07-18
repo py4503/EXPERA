@@ -4,6 +4,7 @@ function Button({
     type = 'submit',
     title = 'Button',
     className = '',
+    children,
     ...props
 }) {
   return (
@@ -18,7 +19,7 @@ function Button({
 
 >
   <span className="transition-transform duration-200 group-hover:translate-x-0.5">
-    {title}
+    {children}
   </span>
 </button>
 

@@ -6,14 +6,14 @@ import { PostCard } from '../components';
 
 function UserPosts() {
     const [posts, setPosts] = useState([]);
-    const userId = useSelector((state) => state.auth.userData.$id)
+    const userId = useSelector((state) => state.auth.userData?.$id)
     const queries = [Query.equal('userId', userId)]
 
     useEffect(() => {
         postService.getAllPosts(queries)
         .then((post) => {
             if(post){
-                console.log("user posts ::", post.documents)
+                // console.log("user posts ::", post.documents)
                 setPosts(post.documents);
             }
         })
@@ -21,12 +21,11 @@ function UserPosts() {
     }, []);
 
   return posts? (
-    <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <section className="max-w-full mx-auto px-14 sm:px-10 lg:px-12 py-6">
         {/* heading */}
-        <div className="mb-10 text-center">
-        <h1 className="text-3xl font-bold text-gray-800 mb-2">Discover Experiences</h1>
+        <div className="mb-5 text-center">
         <p className="text-gray-500 max-w-xl mx-auto text-sm">
-          Explore what others are sharing. Stories, thoughts, visuals, and more.
+         Authored by You
         </p>
       </div>
 

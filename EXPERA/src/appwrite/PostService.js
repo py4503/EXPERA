@@ -123,6 +123,14 @@ class PostService {
             console.log("APPWRITE :: uploadFile", error);
         }
     }
+
+    async deleteFile(fileId){
+        try {
+            await clientService.bucket.deleteFile(fileId);
+        } catch (error) {
+            console.log("APPWRITE :: deleteFile", error);
+        }
+    }
 }
 
 const postService = new PostService();

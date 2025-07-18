@@ -10,20 +10,19 @@ function AllPost() {
             postService.getAllPosts()
             .then((posts) => {
                 if(posts){
-                console.log("all posts ::",posts.documents)
+                // console.log("all posts ::",posts.documents)
                 setPosts(posts.documents);
                 }
             })
-            .catch(() => console.log("ALL - POSTS ::",error))
+            .catch(() => console.log("ALL-POSTS ::",error))
         } catch (error) {
             console.log("Error while loading posts", error);
         }
     }, [])
   return (
-    <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <section className="max-w-full px-14 sm:px-10 lg:px-12 py-6">
         {/* heading */}
-        <div className="mb-10 text-center">
-        <h1 className="text-3xl font-bold text-gray-800 mb-2">Discover Experiences</h1>
+        <div className="mb-5 text-center">
         <p className="text-gray-500 max-w-xl mx-auto text-sm">
           Explore what others are sharing. Stories, thoughts, visuals, and more.
         </p>

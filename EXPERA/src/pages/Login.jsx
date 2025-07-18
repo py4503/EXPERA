@@ -5,9 +5,7 @@ import {Container} from '../components'
 function Login() {
   return (
     <>
-      <Container>
         <LoginComponent/>
-      </Container>
     </>
   )
 }

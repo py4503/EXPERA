@@ -10,5 +10,6 @@ import RTE from "./Editor/RealTimeEditor";
 import Container from "./Container/Container";
 import Login from "./Authorization/Login";
 import Signup from "./Authorization/Signup";
+import Loader from "./Loader/Loader";
 
-export {Input, Button, LogoutBtn, Select, PostCard, PostForm, Header, Footer, RTE, Container, Login, Signup}
+export {Input, Button, LogoutBtn, Select, PostCard, PostForm, Header, Footer, RTE, Container, Login, Signup, Loader}

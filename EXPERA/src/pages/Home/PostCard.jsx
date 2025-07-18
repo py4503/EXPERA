@@ -1,63 +1,15 @@
-import React, { useEffect, useState } from 'react'
-import likeService from '../../appwrite/LikeService';
-import { Query } from 'appwrite';
-import postService from '../../appwrite/PostService';
+import React from 'react'
 import { Link } from 'react-router-dom';
-import profile from '../../assets/profile.png'
-import { useSelector } from 'react-redux';
 
-function PostCard({ $id, userName, title, userId, featuredImage }) {
-  
-  const [likes, setLikes] = useState(0);
-  const [userLiked, setUserLiked] = useState(false);
-  const slug = $id;
-  const currentUserId = useSelector((state) => state.auth.userData?.$id);
-
-    const handleLike = async() => {
-    if(!userLiked){
-      setLikes(() => likes + 1);
-      setUserLiked(true);
-      console.log(currentUserId);
-      await likeService.registerLike({slug, userId:currentUserId});
-    }
-    else{
-      setLikes(() => likes - 1);
-      setUserLiked(false)
-      await likeService.unRegisterLike({slug, userId:currentUserId})
-    }
-  }
-
-  useEffect(() => {
-    const getLikes = async() => {
-      const query = [Query.equal('slug', slug)];
-      const like_count = await likeService.isLiked(query);
-      if(like_count){
-        setLikes(like_count.documents.length);
-      }
-    }
-    const isLikedc = async() => {
-      const query = [Query.and([
-        Query.equal('userId',currentUserId),
-        Query.equal('slug',slug)
-      ])]
-
-      const liked = await likeService.isLiked(query);
-      if(liked.documents.length > 0 && liked.documents[0].userId == currentUserId){
-        setUserLiked(true);
-      }
-    }
-    getLikes();
-    isLikedc();
-  }, []);
-
-  return (
+function PostCard({ userName, likes, title, userLiked, profileImage, featuredImage }) {
+    return (
     <div className="max-w-150 w-full mx-auto bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300">
       
       {/* Post Image */}
-      <Link to={`/post/${slug}`}>
+      <Link to={`/all-posts`}>
       <div className="relative w-full h-70 bg-gray-100 overflow-hidden group">
         <img
-          src={postService.getFile(featuredImage)}
+          src={featuredImage}
           alt="Post"
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
@@ -72,7 +24,7 @@ function PostCard({ $id, userName, title, userId, featuredImage }) {
             <div className="group relative transition duration-500 hover:ring-3 hover:ring-blue-300 rounded-3xl">
 
           <img
-            src={ `https://api.dicebear.com/7.x/adventurer/svg?seed=${$id}`}
+            src={profileImage}
             alt={userName}
             className="w-14 h-14 rounded-full border-2 border-white shadow-md"
           />
@@ -89,7 +41,7 @@ function PostCard({ $id, userName, title, userId, featuredImage }) {
       {/* Like Button */}
 <div className="px-4 pb-4 flex items-center gap-2">
   <button
-    onClick={handleLike}
+    // onClick={handleLike}
     className={`transition-all duration-200 rounded-full p-2 
       ${userLiked ? 'text-red-600 bg-red-100' : 'text-gray-500 hover:text-red-600 hover:bg-red-50'}`}
   >

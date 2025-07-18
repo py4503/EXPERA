@@ -14,7 +14,7 @@ function Select({
                 {...props}
             >
                 {options?.map((option) => (
-                    <option value={option} key={option} className='text-gray-800, rounded-xl'>{option}</option>
+                    <option value={option} key={option} style={{backgroundColor: "#f3f4f",color: "#4b5563"}}>{option}</option>
                 ))}
             </select>
         </div>

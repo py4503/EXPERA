@@ -24,7 +24,7 @@ function LogoutBtn() {
                 onClick={logoutHandler}
                 type="button"
                 className="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-gray-800 border border-gray-300 rounded-xl 
-             shadow-sm hover:bg-gray-50 hover:shadow-md
+             shadow-sm hover:bg-red-700/70 hover:shadow-md
              active:scale-[0.98] transition-all duration-200 ease-in-out
              focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-300 text-sm font-medium"
             >

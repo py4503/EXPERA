@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import { Outlet, useNavigate } from 'react-router-dom'
-import { Header } from './components'
+import { Header, Loader } from './components'
 import authService from './appwrite/AuthService';
 import { useDispatch } from 'react-redux';
 import { login, logout } from './store/authSlice';
@@ -29,7 +29,7 @@ function App() {
       <Outlet/>
     </main>
     </>
-  ) : (<p>Loading...</p>)
+  ) : (<Loader/>)
 }
 
 export default App

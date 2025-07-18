@@ -3,9 +3,7 @@ import { Container, Signup as SignupComponent } from '../components'
 function Signup() {
   return (
     <div>
-      <Container>
         <SignupComponent/>
-      </Container>
     </div>
   )
 }

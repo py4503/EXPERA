@@ -10,15 +10,12 @@ import postService from "../../appwrite/PostService";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-export default function PostForm(post) {
-  
-    console.log("post form ::",post);
+export default function PostForm({post}) {
     const userData = useSelector((state) => state.auth.userData);
-    console.log("user data:", post.title);
     const navigate = useNavigate();
     const [imagePreview, setImagePreview] = useState('');
 
-    const {handleSubmit, watch, control, setValue, getValues, register} = useForm({
+    const {handleSubmit, watch, control, setValue, getValues, reset, register} = useForm({
         defaultValues:{
             title: post?.title || '',
             content: post?.content || '',
@@ -27,23 +24,40 @@ export default function PostForm(post) {
         }
     })
 
+    useEffect(() => {
+    if (post) {
+      reset({
+        title: post.title || "",
+        content: post.content || "",
+        slug: post.slug || "",
+        status: post.status || "publish",
+      });
+      if (post.featuredImage) {
+        setImagePreview(post.featuredImage);
+      }
+    }
+  }, [post, reset]);
+
+
     const submit = async(data) => {
       console.log('Post form ::', data);
         if(post){
-          const file = data?.file[0];
+          const file = data.file[0]? await postService.uploadFile(data.file[0]) : null;
 
           if(file){
-            const fileId = await postService.uploadFile(file);
-            
-            if(fileId){
-              data.featuredImage = fileId;
-              setImagePreview(fileId)
-              const post = await postService.updatePost(data)
-              if(post){
-                navigate(`/post/${slug}`)
-              }
-            }
+            await postService.deletePost(post.featuredImage);
           }
+          else{
+            data.featuredImage = post.featuredImage;
+          }
+
+          const dbpost = await postService.updatePost({...data,
+              featuredImage:file? file.$id : undefined,
+              slug:post.$id
+            });
+            if(post){
+              navigate(`/post/${dbpost.$id}`)
+            }
         }
         else{
             const file = data?.file[0];
@@ -90,10 +104,10 @@ export default function PostForm(post) {
     }, [watch, slugTransform, setValue])
 
   return (
-     <div className="max-w-4xl mx-auto mt-10 rounded-3xl overflow-hidden shadow-lg grid grid-cols-1 lg:grid-cols-3 border border-gray-200">
+     <div className="max-w-full mx-auto mt-10 rounded-2xl overflow-hidden shadow-lg grid grid-cols-1 lg:grid-cols-3 border border-gray-200">
     <motion.form
       onSubmit={handleSubmit(submit)}
-      className="bg-white shadow-xl p-6 rounded-3xl space-y-6 w-full border border-gray-200 col-span-2"
+      className="bg-white shadow-xl p-6 rounded-2xl space-y-6 w-full border border-gray-200 col-span-2"
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
@@ -118,7 +132,7 @@ export default function PostForm(post) {
           type="text"
           // className="mt-1 w-full border border-gray-300 rounded-xl px-4 py-2 bg-gray-100 text-gray-600"
           {...register('slug',{
-            required:true
+            required:!post
           })}
         />
       </div>
@@ -126,11 +140,9 @@ export default function PostForm(post) {
       {/* Editor Placeholder */}
       <div>
         <label className="text-sm font-medium text-gray-700">Content</label>
-        <div className="mt-2 min-h-[150px] border border-gray-300 rounded-xl p-4 text-gray-600 bg-gray-50">
-          {/* Replace with real editor like ReactQuill or TipTap */}
+        <div className="mt-2 min-h-[150px] border border-gray-300 rounded-xl overflow-hidden text-gray-600 bg-gray-50">
           <RTE
           name = 'content'
-          label = 'Content'
           control = {control}
           defaultValues = {getValues('content')}
           />
@@ -140,9 +152,9 @@ export default function PostForm(post) {
       {/* File Upload */}
       <div>
         <label className="text-sm font-medium text-gray-700 mb-1 block">Upload Image</label>
-        <div className="flex items-center gap-4">
-          <label className="cursor-pointer flex items-center gap-2 text-blue-600 hover:text-blue-800 transition">
-            <Upload size={20} />
+        <div className="flex flex-col justify-self-start gap-4">
+          <label className="cursor-pointer flex max-w-xs text-center justify-self-start gap-2 text-blue-600 hover:text-blue-800 transition">
+            <Upload size={30} />
             <span>Select File</span>
             <Input
               type="file"
@@ -156,14 +168,14 @@ export default function PostForm(post) {
             <img
               src={postService.getFile(imagePreview)}
               alt="preview"
-              className="w-16 h-16 rounded-xl object-cover border"
+              className="max-w-full max-h-screen rounded-xl object-cover border"
             />
           )}
         </div>
       </div>
 
       {/* Status */}
-      <div>
+      <div className="mb-10">
         <label className="text-sm font-medium text-gray-700">Status</label>
         <Select
           // className="mt-1 w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-blue-500 transition"

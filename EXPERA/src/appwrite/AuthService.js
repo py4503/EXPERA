@@ -48,7 +48,7 @@ class AuthService{
                 return user;
             }
         } catch (error) {
-            console.log("APPWRITE :: getCurrentUser", error);
+            console.log("APPWRITE :: getCurrentUser :: user not logged in");
         }
     }
 }

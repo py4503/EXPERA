@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
-import { Container } from './components';
+import { Loader } from './components';
 
 function AuthLayout({children, authentication = true}) {
 
@@ -20,10 +20,10 @@ function AuthLayout({children, authentication = true}) {
     }, [authStatus, navigate, authentication])
 
   return !loading? (
-    <Container>
+    <>
         {children}
-    </Container>
-  ) : (<p>Loading...</p>)
+    </>
+  ) : (<div><Loader/></div>)
 }
 
 export default AuthLayout

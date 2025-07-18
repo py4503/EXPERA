@@ -22,10 +22,10 @@ function EditPost() {
         })
         .catch((error) => console.log(error));
     }, [slug, navigate])
-
+    console.log("spreaded post ::",{...post})
   return post? (
     <Container>
-        <PostForm {...post}/>
+        <PostForm post = {post}/>
     </Container>
   ) : (<p>post not found...</p>)
 }

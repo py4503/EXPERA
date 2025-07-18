@@ -1,19 +1,19 @@
 import React from 'react'
-import { Menu, Search, ShoppingCart } from 'lucide-react';
 import { useState } from 'react';
 import {useSelector} from 'react-redux'
 import {Link} from 'react-router-dom'
 import LogoutBtn from '../utils/LogoutBtn';
+import { NavLink } from 'react-router-dom';
 
 function Header() {
     const [mobileOpen, setMobileOpen] = useState(false);
     const authStatus = useSelector((state) => state.auth.status);
-    if(authStatus){
-      console.log("User logged in");
-    }
-    else{
-      console.log("User not logged in");
-    }
+    // if(authStatus){
+    //   console.log("User logged in");
+    // }
+    // else{
+    //   console.log("User not logged in");
+    // }
   const navItems = [
     {
         name:'Home',
@@ -61,14 +61,18 @@ function Header() {
 
           <nav className="hidden md:flex space-x-6">
             {navItems.map((item) => item.status?(
-              <Link
+              <NavLink
                 key={item.name}
                 className="text-sm text-gray-700 hover:text-black transition duration-200 relative group"
                 to={item.path}
               >
-                <span>{item.name}</span>
-                <span className='absolute bottom-[-2px] left-0 w-0 h-[2px] bg-black transition-all group-hover:w-full'></span>
-              </Link>
+                {({isActive}) => (
+                  <>
+                  <span>{item.name}</span>
+                <span className={isActive? 'absolute bottom-[-2px] left-0 h-[2px] bg-black w-full' : 'absolute bottom-[-2px] left-0 w-0 h-[2px] bg-black transition-all group-hover:w-full'}></span>
+                </>
+                )}
+              </NavLink>
             ) : '')}
           </nav>
 
