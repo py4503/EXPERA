@@ -4,7 +4,8 @@ import { useSelector } from "react-redux";
 import postService from "../../appwrite/PostService";
 import { Query } from "appwrite";
 import PostCard from "../posts/PostCard";
-
+import likeService from "../../appwrite/LikeService";
+import Loader from "../Loader/Loader";
 
 const EmptyState = ({ icon, message, details }) => (
   <div className="col-span-full flex flex-col items-center justify-center text-center text-slate-500 py-20 bg-slate-50 rounded-xl border-2 border-dashed">
@@ -30,8 +31,13 @@ export default function UserProfile() {
         const savedQuery = [Query.equal("userId", user.$id)];
         const savedRes = await postService.getSavedPosts(savedQuery);
 
-        console.log("sres ::", savedRes.documents)
-        // setSavedPosts(savedRes.documents || []);
+        // console.log("sres ::", savedRes.documents)
+        setSavedPosts(savedRes.documents || []);
+
+        const likedRes = await likeService.getLikedPosts({ userId: user.$id });
+        // console.log("lres::",likedRes.documents);
+
+        setLikedPosts(likedRes.documents)
 
       } catch (error) {
         console.error("Error loading profile data:", error);
@@ -50,7 +56,7 @@ export default function UserProfile() {
 
   const displayedPosts =
     TABS.find((tab) => tab.id === activeTab)?.data || [];
-
+    
   return (
     <div className="min-h-screen bg-slate-100 font-sans p-4 sm:p-6 lg:p-8">
       <div className="max-w-6xl mx-auto">
@@ -74,15 +80,14 @@ export default function UserProfile() {
         </div>
 
         {/* Tabs */}
-        <div className="flex justify-center my-8 bg-white p-2 rounded-xl shadow-md sticky top-4 z-20">
+        <div className="flex justify-around my-8 bg-white p-2 rounded-xl shadow-md sticky top-4 z-20">
           {TABS.map((tab) => (
             <button
               key={tab.id}
-              className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 font-bold text-sm rounded-lg transition-colors duration-300 ${
-                activeTab === tab.id
+              className={`flex-1 flex items-center max-w-140 justify-center gap-2 px-4 py-3 font-bold text-sm rounded-lg transition-colors duration-300 ${activeTab === tab.id
                   ? "bg-blue-600 text-white shadow-lg"
                   : "text-slate-600 hover:bg-slate-100"
-              }`}
+                }`}
               onClick={() => setActiveTab(tab.id)}
             >
               {tab.icon} {tab.label}
@@ -96,11 +101,11 @@ export default function UserProfile() {
         {/* Posts Section */}
         <div className="p-4 sm:p-0">
           {loading ? (
-            <div className="text-center text-slate-500 py-20">Loading...</div>
+            <div className="text-center text-slate-500 py-20"><Loader /></div>
           ) : displayedPosts.length > 0 ? (
             <div className="grid gap-6 md:gap-8 sm:grid-cols-2 lg:grid-cols-3">
               {displayedPosts.map((post) => (
-                <PostCard key={post.$id} {...post} />
+                <PostCard key={post.$id} {...post.slug} />
               ))}
             </div>
           ) : (

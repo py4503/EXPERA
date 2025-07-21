@@ -57,6 +57,23 @@ class LikeService {
             console.log("APPWRITE :: isLiked",error);
         }
     }
+
+    async getLikedPosts({userId}){
+        try {
+            const queries = [Query.equal('userId', userId)];
+            const posts = await clientService.databases.listDocuments(
+                conf.appwriteDatabaseId,
+                conf.appWriteCollectionLikesId,
+                queries
+            )
+
+            if(posts){
+                return posts;
+            }
+        } catch (error) {
+            console.log("APPWRITE :: getLikedPosts",error);
+        }
+    }
 }
 const likeService = new LikeService();
 export default likeService;
