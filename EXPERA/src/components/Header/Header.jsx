@@ -4,10 +4,12 @@ import {useSelector} from 'react-redux'
 import {Link} from 'react-router-dom'
 import LogoutBtn from '../utils/LogoutBtn';
 import { NavLink } from 'react-router-dom';
+import AvatarDropdown from './AvatarDropdown';
 
 function Header() {
     const [mobileOpen, setMobileOpen] = useState(false);
     const authStatus = useSelector((state) => state.auth.status);
+    const user = useSelector((state) => state.auth.userData);
     // if(authStatus){
     //   console.log("User logged in");
     // }
@@ -78,9 +80,7 @@ function Header() {
 
         {/* session logout */}
           {authStatus && (
-            <div className="flex items-center gap-4">
-            <LogoutBtn/>
-            </div>
+            <AvatarDropdown user = {user}/>
           )}
         </div>
       </div>

@@ -11,5 +11,7 @@ import Container from "./Container/Container";
 import Login from "./Authorization/Login";
 import Signup from "./Authorization/Signup";
 import Loader from "./Loader/Loader";
+import UserProfile from "./profile/UserProfile";
+import AvatarDropdown from "./Header/AvatarDropdown";
 
-export {Input, Button, LogoutBtn, Select, PostCard, PostForm, Header, Footer, RTE, Container, Login, Signup, Loader}
+export {Input, Button, LogoutBtn, Select, PostCard, PostForm, Header, Footer, RTE, Container, Login, Signup, Loader, UserProfile, AvatarDropdown}

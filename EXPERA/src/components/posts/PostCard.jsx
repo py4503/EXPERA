@@ -12,7 +12,8 @@ function PostCard({ $id, userName, title, userId, featuredImage }) {
   const [userLiked, setUserLiked] = useState(false);
   const slug = $id;
   const currentUserId = useSelector((state) => state.auth.userData?.$id);
-
+  const [saved, setSaved] = useState(false);
+  
     const handleLike = async() => {
     if(!userLiked){
       setLikes(() => likes + 1);
@@ -49,6 +50,33 @@ function PostCard({ $id, userName, title, userId, featuredImage }) {
     getLikes();
     isLikedc();
   }, []);
+
+  useEffect(() => {
+    const getSavedStatus = async() => {
+          const queries = [Query.and([
+            Query.equal('userId', currentUserId),
+            Query.equal('slug',slug)
+          ])]
+
+          const isSaved = await postService.getSavedPosts(queries);
+
+          if(isSaved.documents.length){
+            setSaved(true);
+          }
+    }
+    getSavedStatus();
+  },[])
+
+  const handleSave = async() => {
+    if(saved){
+      setSaved(false);
+      await postService.removeFromSaved({slug, userId});
+    }
+    else{
+      setSaved(true);
+      await postService.savePost({slug, userId});
+    }
+  }
 
   return (
     <div className="max-w-150 w-full mx-auto bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300">
@@ -87,7 +115,8 @@ function PostCard({ $id, userName, title, userId, featuredImage }) {
       </div>
       </Link>
       {/* Like Button */}
-<div className="px-4 pb-4 flex items-center gap-2">
+<div className="px-4 pb-4 flex justify-between items-center gap-2">
+  <div className='flex flex-wrap'>
   <button
     onClick={handleLike}
     className={`transition-all duration-200 rounded-full p-2 
@@ -108,7 +137,31 @@ function PostCard({ $id, userName, title, userId, featuredImage }) {
       />
     </svg>
   </button>
-  <span className="text-sm text-gray-600">{likes} {likes === 1 ? "like" : "likes"}</span>
+  <div className="text-sm text-gray-600 items-center my-auto px-1">{likes} {likes === 1 ? "like" : "likes"}</div>
+  </div>
+  <div>
+      <button
+    onClick={handleSave}
+    className={`transition-all duration-200 rounded-full p-2 
+      ${saved ? 'text-black/80 bg-black/10' : 'text-gray-500 hover:text-red-600 hover:bg-red-50'}`}
+  >
+    <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill={saved ? 'currentColor' : 'none'}
+  viewBox="0 0 24 24"
+  stroke="currentColor"
+  className="w-5 h-5"
+>
+  <path
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    strokeWidth={2}
+    d="M5 3a2 2 0 012-2h10a2 2 0 012 2v18l-7-5-7 5V3z"
+  />
+</svg>
+
+  </button>
+  </div>
 </div>
     </div>
   );

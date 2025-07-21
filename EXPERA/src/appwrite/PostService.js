@@ -120,7 +120,7 @@ class PostService {
                 return file;
             }
         } catch (error) {
-            console.log("APPWRITE :: uploadFile", error);
+            console.log("APPWRITE :: getFile", error);
         }
     }
 
@@ -129,6 +129,66 @@ class PostService {
             await clientService.bucket.deleteFile(fileId);
         } catch (error) {
             console.log("APPWRITE :: deleteFile", error);
+        }
+    }
+
+    async savePost({slug, userId}){
+        try {
+            const saved = await clientService.databases.createDocument(
+                conf.appwriteDatabaseId,
+                conf.appwriteCollectionSavedPostsId,
+                ID.unique(),
+                {
+                    slug,
+                    userId
+                }
+            )
+            if(saved){
+                return saved;
+            }
+        } catch (error) {
+            console.log("APPWRITE :: savePost", error);
+        }
+    }
+
+    async getSavedPosts(queries){
+        try {
+            const posts = await clientService.databases.listDocuments(
+                conf.appwriteDatabaseId,
+                conf.appwriteCollectionSavedPostsId,
+                queries
+            )
+            
+
+            if(posts){
+                return posts;
+            }
+        } catch (error) {
+            console.log("APPWRITE :: getSavedPosts", error);
+        }
+    }
+
+    async removeFromSaved({slug, userId}){
+        try {
+            const queries = [Query.and([
+                Query.equal('slug', slug),
+                Query.equal('userId', userId),
+            ])]
+            const doc = await clientService.databases.listDocuments(
+                conf.appwriteDatabaseId,
+                conf.appwriteCollectionSavedPostsId,
+                queries
+            )
+            const docId = doc.documents[0].$id;
+            await clientService.databases.deleteDocument(
+                conf.appwriteDatabaseId,
+                conf.appwriteCollectionSavedPostsId,
+                docId
+            )
+            return true;
+        } catch (error) {
+            console.log("APPWRITE :: removeFromSaved", error);
+            return false;
         }
     }
 }
