@@ -105,7 +105,7 @@ export default function UserProfile() {
           ) : displayedPosts.length > 0 ? (
             <div className="grid gap-6 md:gap-8 sm:grid-cols-2 lg:grid-cols-3">
               {displayedPosts.map((post) => (
-                <PostCard key={post.$id} {...post.slug} />
+                <PostCard key={post?.$id} {...post.slug} />
               ))}
             </div>
           ) : (
