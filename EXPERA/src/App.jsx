@@ -11,25 +11,25 @@ function App() {
   const dispatch = useDispatch()
   useEffect(() => {
     authService.getCurrentUser()
-    .then((user) => {
-      if(user){
-      dispatch(login(user))
-      }
-      else{
-        dispatch(logout())
-      }
-    })
-    .catch((error) => console.log("APP :: ",error))
-    .finally(() => setLoading(false))
+      .then((user) => {
+        if (user) {
+          dispatch(login(user))
+        }
+        else {
+          dispatch(logout())
+        }
+      })
+      .catch((error) => console.log("APP :: ", error))
+      .finally(() => setLoading(false))
   }, [])
-  return !loading? (
+  return !loading ? (
     <>
-    <Header/>
-    <main>
-      <Outlet/>
-    </main>
+      <Header />
+      <main>
+        <Outlet />
+      </main>
     </>
-  ) : (<Loader/>)
+  ) : (<Loader />)
 }
 
 export default App

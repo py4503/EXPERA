@@ -4,7 +4,7 @@ import { clientService } from "./ClientService";
 
 class PostService {
     async createPost({ title, content, status, featuredImage, userId, slug, userName }) {
-        console.log("Create post data ::","title:",title,"content:",content,"userName:",userName)
+        console.log("Create post data ::", "title:", title, "content:", content, "userName:", userName)
         try {
             const post = await clientService.databases.createDocument(
                 conf.appwriteDatabaseId,
@@ -124,7 +124,7 @@ class PostService {
         }
     }
 
-    async deleteFile(fileId){
+    async deleteFile(fileId) {
         try {
             await clientService.bucket.deleteFile(fileId);
         } catch (error) {
@@ -132,7 +132,7 @@ class PostService {
         }
     }
 
-    async savePost({slug, userId}){
+    async savePost({ slug, userId }) {
         try {
             const saved = await clientService.databases.createDocument(
                 conf.appwriteDatabaseId,
@@ -143,7 +143,7 @@ class PostService {
                     userId
                 }
             )
-            if(saved){
+            if (saved) {
                 return saved;
             }
         } catch (error) {
@@ -151,16 +151,16 @@ class PostService {
         }
     }
 
-    async getSavedPosts(queries){
+    async getSavedPosts(queries) {
         try {
             const posts = await clientService.databases.listDocuments(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionSavedPostsId,
                 queries
             )
-            
 
-            if(posts){
+
+            if (posts) {
                 return posts;
             }
         } catch (error) {
@@ -168,7 +168,7 @@ class PostService {
         }
     }
 
-    async removeFromSaved({slug, userId}){
+    async removeFromSaved({ slug, userId }) {
         try {
             const queries = [Query.and([
                 Query.equal('slug', slug),

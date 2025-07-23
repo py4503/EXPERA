@@ -6,8 +6,8 @@ function Astronaut() {
   return (
     <div>
       <Lottie
-      animationData={astronaut}
-      loop
+        animationData={astronaut}
+        loop
       />
     </div>
   )

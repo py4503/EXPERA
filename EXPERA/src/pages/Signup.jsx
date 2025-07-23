@@ -3,7 +3,7 @@ import { Container, Signup as SignupComponent } from '../components'
 function Signup() {
   return (
     <div>
-        <SignupComponent/>
+      <SignupComponent />
     </div>
   )
 }

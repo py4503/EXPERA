@@ -100,91 +100,91 @@ export default function Post() {
     }
 
     return (
-      <div className='px-2'>
-        <div className="bg-gray-50 min-h-screen font-sans">
-            <main>
-                {/* --- Hero Section --- */}
-                <motion.div 
-                    className="relative h-[60vh] md:h-[80vh] w-full overflow-hidden"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.8 }}
-                >
-                    <motion.img
-                        src={postService.getFile(post.featuredImage)}
-                        alt={post.title}
-                        className="absolute inset-0 w-full h-full object-cover"
-                        transition={{ duration: 1.5, ease: "easeOut" }}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
-                    <div className="absolute inset-0 flex items-end p-6 md:p-12">
-                        <motion.h1 
-                            className="text-white text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight max-w-4xl drop-shadow-2xl"
-                            initial={{ opacity: 0, y: 30 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.5, duration: 0.8, ease: "easeOut" }}
-                        >
-                            {post.title}
-                        </motion.h1>
-                    </div>
-                </motion.div>
-
-                {/* --- Post Meta & Content --- */}
-                <div className="container mx-auto -mt-24 md:-mt-32 relative z-10 px-4 pb-16">
-                    <motion.div 
-                        className="bg-white rounded-2xl shadow-2xl p-6 md:p-10"
-                        initial={{ opacity: 0, y: 50 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.8, duration: 0.7 }}
+        <div className='px-2'>
+            <div className="bg-gray-50 min-h-screen font-sans">
+                <main>
+                    {/* --- Hero Section --- */}
+                    <motion.div
+                        className="relative h-[60vh] md:h-[80vh] w-full overflow-hidden"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.8 }}
                     >
-                        {/* --- Author & Actions --- */}
-                        <div className="flex flex-wrap justify-between items-center gap-6 border-b border-gray-200 pb-6">
-                            <div className="flex items-center space-x-4">
-                                <img src={`https://api.dicebear.com/7.x/adventurer/svg?seed=${post.$id}`} alt={post.userName} className="w-14 h-14 rounded-full object-cover border-4 border-white shadow-md"/>
-                                <div>
-                                    <p className="font-bold text-lg text-gray-800">{post.userName}</p>
-                                    <p className="text-sm text-gray-500">
-                                        {new Date(post.$createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
-                                    </p>
-                                </div>
-                            </div>
-                            <div className="flex items-center space-x-3">
-                                {isAuthor && (
-                                    <>
-                                        <Link to={`/edit-post/${post.$id}`} className="flex items-center space-x-2 px-4 py-2 rounded-full text-sm font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 transition-all duration-300 transform hover:scale-105">
-                                            <Edit size={16} />
-                                            <span>Edit</span>
-                                        </Link>
-                                        <button onClick={() => setDeleteModalOpen(true)} className="flex items-center space-x-2 px-4 py-2 rounded-full text-sm font-semibold text-red-600 bg-red-100 hover:bg-red-200 transition-all duration-300 transform hover:scale-105">
-                                            <Trash2 size={16} />
-                                            <span>Delete</span>
-                                        </button>
-                                        <div className="h-6 w-px bg-gray-200"></div>
-                                    </>
-                                )}
-                                <div className="flex items-center space-x-2">
-                                    <button className="p-2 rounded-full text-gray-500 hover:bg-gray-100 hover:text-gray-800 transition-colors"><Twitter size={18} /></button>
-                                    <button className="p-2 rounded-full text-gray-500 hover:bg-gray-100 hover:text-gray-800 transition-colors"><Facebook size={18} /></button>
-                                    <button className="p-2 rounded-full text-gray-500 hover:bg-gray-100 hover:text-gray-800 transition-colors"><Linkedin size={18} /></button>
-                                </div>
-                            </div>
+                        <motion.img
+                            src={postService.getFile(post.featuredImage)}
+                            alt={post.title}
+                            className="absolute inset-0 w-full h-full object-cover"
+                            transition={{ duration: 1.5, ease: "easeOut" }}
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+                        <div className="absolute inset-0 flex items-end p-6 md:p-12">
+                            <motion.h1
+                                className="text-white text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight max-w-4xl drop-shadow-2xl"
+                                initial={{ opacity: 0, y: 30 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.5, duration: 0.8, ease: "easeOut" }}
+                            >
+                                {post.title}
+                            </motion.h1>
                         </div>
-
-                        {/* --- Post Content --- */}
-                        <article className="prose lg:prose-xl max-w-none mt-8 text-gray-700 prose-headings:font-bold prose-h2:text-gray-800 prose-a:text-indigo-600 hover:prose-a:text-indigo-800 prose-img:rounded-xl prose-img:shadow-lg">
-                            {parse(post.content)}
-                        </article>
                     </motion.div>
-                </div>
-            </main>
 
-            {/* --- Confirmation Modal --- */}
-            <ConfirmationModal
-                isOpen={isDeleteModalOpen}
-                onConfirm={deletePost}
-                onCancel={() => setDeleteModalOpen(false)}
-            />
-        </div>
+                    {/* --- Post Meta & Content --- */}
+                    <div className="container mx-auto -mt-24 md:-mt-32 relative z-10 px-4 pb-16">
+                        <motion.div
+                            className="bg-white rounded-2xl shadow-2xl p-6 md:p-10"
+                            initial={{ opacity: 0, y: 50 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.8, duration: 0.7 }}
+                        >
+                            {/* --- Author & Actions --- */}
+                            <div className="flex flex-wrap justify-between items-center gap-6 border-b border-gray-200 pb-6">
+                                <div className="flex items-center space-x-4">
+                                    <img src={`https://api.dicebear.com/7.x/adventurer/svg?seed=${post.$id}`} alt={post.userName} className="w-14 h-14 rounded-full object-cover border-4 border-white shadow-md" />
+                                    <div>
+                                        <p className="font-bold text-lg text-gray-800">{post.userName}</p>
+                                        <p className="text-sm text-gray-500">
+                                            {new Date(post.$createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div className="flex items-center space-x-3">
+                                    {isAuthor && (
+                                        <>
+                                            <Link to={`/edit-post/${post.$id}`} className="flex items-center space-x-2 px-4 py-2 rounded-full text-sm font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 transition-all duration-300 transform hover:scale-105">
+                                                <Edit size={16} />
+                                                <span>Edit</span>
+                                            </Link>
+                                            <button onClick={() => setDeleteModalOpen(true)} className="flex items-center space-x-2 px-4 py-2 rounded-full text-sm font-semibold text-red-600 bg-red-100 hover:bg-red-200 transition-all duration-300 transform hover:scale-105">
+                                                <Trash2 size={16} />
+                                                <span>Delete</span>
+                                            </button>
+                                            <div className="h-6 w-px bg-gray-200"></div>
+                                        </>
+                                    )}
+                                    <div className="flex items-center space-x-2">
+                                        <button className="p-2 rounded-full text-gray-500 hover:bg-gray-100 hover:text-gray-800 transition-colors"><Twitter size={18} /></button>
+                                        <button className="p-2 rounded-full text-gray-500 hover:bg-gray-100 hover:text-gray-800 transition-colors"><Facebook size={18} /></button>
+                                        <button className="p-2 rounded-full text-gray-500 hover:bg-gray-100 hover:text-gray-800 transition-colors"><Linkedin size={18} /></button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* --- Post Content --- */}
+                            <article className="prose lg:prose-xl max-w-none mt-8 text-gray-700 prose-headings:font-bold prose-h2:text-gray-800 prose-a:text-indigo-600 hover:prose-a:text-indigo-800 prose-img:rounded-xl prose-img:shadow-lg">
+                                {parse(post.content)}
+                            </article>
+                        </motion.div>
+                    </div>
+                </main>
+
+                {/* --- Confirmation Modal --- */}
+                <ConfirmationModal
+                    isOpen={isDeleteModalOpen}
+                    onConfirm={deletePost}
+                    onCancel={() => setDeleteModalOpen(false)}
+                />
+            </div>
         </div>
     );
 }

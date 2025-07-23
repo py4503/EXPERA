@@ -5,31 +5,31 @@ import { useForm } from 'react-hook-form'
 import authService from '../../appwrite/AuthService';
 import { login } from '../../store/authSlice';
 import { Link } from 'react-router-dom';
-import {Input, Button} from '../index'
+import { Input, Button } from '../index'
 import Astronaut from '../Animations/Astronaut';
 
 function Login() {
-    const {register, handleSubmit, formState:{errors}} = useForm();
-    const [error, setError] = useState('');
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const handleLogin = async(data) => {
-        try {
-            const session = await authService.login(data);
-            
-            if(session){
-                const user = await authService.getCurrentUser();
+  const { register, handleSubmit, formState: { errors } } = useForm();
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const handleLogin = async (data) => {
+    try {
+      const session = await authService.login(data);
 
-                if(user){
-                    dispatch(login(user))
-                    navigate('/')
-                }
-            }
-        } catch (error) {
-            setError(error.message)
-            console.log("Error while Logging in! ::", error)
+      if (session) {
+        const user = await authService.getCurrentUser();
+
+        if (user) {
+          dispatch(login(user))
+          navigate('/')
         }
+      }
+    } catch (error) {
+      setError(error.message)
+      console.log("Error while Logging in! ::", error)
     }
+  }
   return (
     <div className="flex w-full h-[calc(100vh-4rem)]">
       {/* Left Section: Form */}
@@ -57,8 +57,8 @@ function Login() {
                 placeholder="Enter you email..."
                 className="w-full border-b border-gray-300 focus:outline-none focus:border-blue-500 py-2"
                 {...register('email', {
-                  required:true,
-                  validate:{matchPattern: (value) => /^([\w\.\-_]+)?\w+@[\w-_]+(\.\w+){1,}$/.test(value) || "Enter valid email address"}
+                  required: true,
+                  validate: { matchPattern: (value) => /^([\w\.\-_]+)?\w+@[\w-_]+(\.\w+){1,}$/.test(value) || "Enter valid email address" }
                 })}
               />
             </div>
@@ -73,7 +73,7 @@ function Login() {
                 placeholder="Enter your password..."
                 className="w-full border-b border-gray-300 focus:outline-none focus:border-blue-500 py-2"
                 {...register('password', {
-                  required:true,
+                  required: true,
                 })}
               />
             </div>
@@ -93,7 +93,7 @@ function Login() {
 
       {/* Right Section: Image */}
       <div className="w-1/2 bg-gray-100 flex justify-center items-center">
-        <Astronaut/>
+        <Astronaut />
       </div>
     </div>
   );

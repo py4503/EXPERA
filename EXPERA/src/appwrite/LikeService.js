@@ -15,11 +15,11 @@ class LikeService {
                 }
             )
         } catch (error) {
-            console.log("APPWRITE :: unRegisterLike",error);
+            console.log("APPWRITE :: unRegisterLike", error);
         }
     }
 
-    async unRegisterLike({slug, userId}){
+    async unRegisterLike({ slug, userId }) {
         try {
             const queries = [Query.and([
                 Query.equal('slug', slug),
@@ -38,27 +38,27 @@ class LikeService {
             )
             return true;
         } catch (error) {
-            console.log("APPWRITE :: unRegisterLike",error);
+            console.log("APPWRITE :: unRegisterLike", error);
             return false;
         }
     }
 
-    async isLiked(queries){
+    async isLiked(queries) {
         try {
             const likes = await clientService.databases.listDocuments(
                 conf.appwriteDatabaseId,
                 conf.appWriteCollectionLikesId,
                 queries
             )
-            if(likes){
+            if (likes) {
                 return likes;
             }
         } catch (error) {
-            console.log("APPWRITE :: isLiked",error);
+            console.log("APPWRITE :: isLiked", error);
         }
     }
 
-    async getLikedPosts({userId}){
+    async getLikedPosts({ userId }) {
         try {
             const queries = [Query.equal('userId', userId)];
             const posts = await clientService.databases.listDocuments(
@@ -67,11 +67,11 @@ class LikeService {
                 queries
             )
 
-            if(posts){
+            if (posts) {
                 return posts;
             }
         } catch (error) {
-            console.log("APPWRITE :: getLikedPosts",error);
+            console.log("APPWRITE :: getLikedPosts", error);
         }
     }
 }

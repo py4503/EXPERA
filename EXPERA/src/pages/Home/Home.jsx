@@ -2,7 +2,7 @@ import React from "react";
 import PostCard from "./PostCard";
 import { Link } from "react-router-dom";
 import profile_1 from '../../assets/home/profile_1.jpg'
-import profile_2  from '../../assets/home/profile_2.webp'
+import profile_2 from '../../assets/home/profile_2.webp'
 import profile_3 from '../../assets/home/profile_3.jpg'
 import design from '../../assets/home/design.png'
 import moon from '../../assets/home/moon_mountain.webp'
@@ -14,8 +14,8 @@ const posts = [
     profileImage: profile_1,
     featuredImage: design,
     userName: "Steve Jobs",
-    userLiked:true,
-    likes:1232,
+    userLiked: true,
+    likes: 1232,
     title: "Design is not just what it looks like.",
   },
   {
@@ -23,8 +23,8 @@ const posts = [
     profileImage: profile_2,
     featuredImage: moon,
     userName: "Leo Vega",
-    userLiked:false,
-    likes:500,
+    userLiked: false,
+    likes: 500,
     title: "I write poems under moonlight and pretend I’m stardust.",
   },
   {
@@ -32,8 +32,8 @@ const posts = [
     profileImage: profile_3,
     featuredImage: mental_health,
     userName: "Noah Arai",
-    userLiked:true,
-    likes:3098,
+    userLiked: true,
+    likes: 3098,
     title: "I documented my burnout. Here's what I learned.",
   },
 ];

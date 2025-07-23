@@ -237,19 +237,19 @@ function RTE({ name, control, label, defaultValue = '' }) {
             'resizeImage'
           ]
         },
-        mediaEmbed:{
+        mediaEmbed: {
           previewsInData: true
         },
         htmlSupport: {
-  allow: [
-    {
-      name: /.+/,
-      attributes: true,
-      classes: true,
-      styles: true
-    }
-  ]
-},
+          allow: [
+            {
+              name: /.+/,
+              attributes: true,
+              classes: true,
+              styles: true
+            }
+          ]
+        },
         placeholder: 'Type or paste your content here!',
         licenseKey: 'GPL',
         link: {
@@ -289,7 +289,7 @@ function RTE({ name, control, label, defaultValue = '' }) {
             { name: 'Marker', element: 'span', classes: ['marker'] }
           ]
         },
-        uiColor:'1e1e1e',
+        uiColor: '1e1e1e',
         table: {
           contentToolbar: [
             'tableColumn',
@@ -319,14 +319,14 @@ function RTE({ name, control, label, defaultValue = '' }) {
               const data = editor.getData();
               onChange(data); // updates form state
             }}
-            // word count
-            // onReady={(editor) => {
-            //   const wordCount = editor.plugins.get('WordCount');
-            //   if (wordCountRef.current && wordCount.wordCountContainer) {
-            //     wordCountRef.current.innerHTML = '';
-            //     wordCountRef.current.appendChild(wordCount.wordCountContainer);
-            //   }
-            // }}
+          // word count
+          // onReady={(editor) => {
+          //   const wordCount = editor.plugins.get('WordCount');
+          //   if (wordCountRef.current && wordCount.wordCountContainer) {
+          //     wordCountRef.current.innerHTML = '';
+          //     wordCountRef.current.appendChild(wordCount.wordCountContainer);
+          //   }
+          // }}
           />
         )}
       />

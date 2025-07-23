@@ -11,74 +11,74 @@ import AuthLayout from './AuthLayout.jsx'
 const router = createBrowserRouter(
   [
     {
-      path:'/',
-      element:<App/>,
-      children:[
+      path: '/',
+      element: <App />,
+      children: [
         {
-          path:'/',
-          element:<Home/>
+          path: '/',
+          element: <Home />
         },
         {
-          path:'/all-posts',
-          element:(
-            <AuthLayout authentication = {true}>
-                <AllPost/>
+          path: '/all-posts',
+          element: (
+            <AuthLayout authentication={true}>
+              <AllPost />
             </AuthLayout>
           )
         },
         {
-          path:'/add-post',
-          element:(
-            <AuthLayout authentication = {true}>
-                <AddPost/>
+          path: '/add-post',
+          element: (
+            <AuthLayout authentication={true}>
+              <AddPost />
             </AuthLayout>
           )
         },
         {
-          path:'/edit-post/:slug',
-          element:(
-            <AuthLayout authentication = {true}>
-                <EditPost/>
+          path: '/edit-post/:slug',
+          element: (
+            <AuthLayout authentication={true}>
+              <EditPost />
             </AuthLayout>
           )
         },
         {
-          path:'/my-posts',
-          element:(
-            <AuthLayout authentication = {true}>
-              <UserPosts/>
+          path: '/my-posts',
+          element: (
+            <AuthLayout authentication={true}>
+              <UserPosts />
             </AuthLayout>
           )
         },
         {
-          path:'/login',
-          element:(
-            <AuthLayout authentication = {false}>
-              <Login/>
+          path: '/login',
+          element: (
+            <AuthLayout authentication={false}>
+              <Login />
             </AuthLayout>
           )
         },
         {
-          path:'/signup',
-          element:(
-            <AuthLayout authentication = {false}>
-              <Signup/>
+          path: '/signup',
+          element: (
+            <AuthLayout authentication={false}>
+              <Signup />
             </AuthLayout>
           )
         },
         {
-          path:'/post/:slug',
-          element:(
-            <AuthLayout authentication = {true}>
-              <Post/>
+          path: '/post/:slug',
+          element: (
+            <AuthLayout authentication={true}>
+              <Post />
             </AuthLayout>
           )
         },
         {
-          path:'/profile',
-          element:(
-            <AuthLayout authentication = {true}>
-              <ProfilePage/>
+          path: '/profile',
+          element: (
+            <AuthLayout authentication={true}>
+              <ProfilePage />
             </AuthLayout>
           )
         }
@@ -90,9 +90,9 @@ const router = createBrowserRouter(
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Provider store={store}>
-    <RouterProvider router={router}>
-    <App />
-    </RouterProvider>
+      <RouterProvider router={router}>
+        <App />
+      </RouterProvider>
     </Provider>
   </StrictMode>,
 )

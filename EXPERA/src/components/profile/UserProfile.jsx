@@ -56,7 +56,7 @@ export default function UserProfile() {
 
   const displayedPosts =
     TABS.find((tab) => tab.id === activeTab)?.data || [];
-    
+
   return (
     <div className="min-h-screen bg-slate-100 font-sans p-4 sm:p-6 lg:p-8">
       <div className="max-w-6xl mx-auto">
@@ -85,8 +85,8 @@ export default function UserProfile() {
             <button
               key={tab.id}
               className={`flex-1 flex items-center max-w-140 justify-center gap-2 px-4 py-3 font-bold text-sm rounded-lg transition-colors duration-300 ${activeTab === tab.id
-                  ? "bg-blue-600 text-white shadow-lg"
-                  : "text-slate-600 hover:bg-slate-100"
+                ? "bg-blue-600 text-white shadow-lg"
+                : "text-slate-600 hover:bg-slate-100"
                 }`}
               onClick={() => setActiveTab(tab.id)}
             >

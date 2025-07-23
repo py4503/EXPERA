@@ -1,15 +1,15 @@
 import conf from "../conf/conf";
 import { Account, Client, Databases, Storage } from "appwrite"
 
-class AppwriteClient{
+class AppwriteClient {
     client = new Client();
     account;
     databases;
     bucket;
-    constructor(){
+    constructor() {
         this.client
-        .setEndpoint(conf.appwriteUrl)
-        .setProject(conf.appwriteProjectId)
+            .setEndpoint(conf.appwriteUrl)
+            .setProject(conf.appwriteProjectId)
 
         this.account = new Account(this.client);
         this.databases = new Databases(this.client);
@@ -19,4 +19,4 @@ class AppwriteClient{
 
 const clientService = new AppwriteClient();
 
-export {clientService}
+export { clientService }

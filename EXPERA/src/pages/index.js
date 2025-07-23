@@ -8,4 +8,4 @@ import Login from "./Login";
 import UserPosts from "./UserPosts";
 import ProfilePage from "./ProfilePage";
 
-export {AddPost, AllPost, EditPost, Home, Post, Signup, Login, UserPosts, ProfilePage};
+export { AddPost, AllPost, EditPost, Home, Post, Signup, Login, UserPosts, ProfilePage };

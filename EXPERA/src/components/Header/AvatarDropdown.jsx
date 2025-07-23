@@ -40,7 +40,7 @@ function AvatarDropdown({ user }) {
           </Link>
           <div className="border-t border-gray-100" />
           <div className="px-4 py-2">
-            <LogoutBtn/>
+            <LogoutBtn />
           </div>
         </div>
       )}

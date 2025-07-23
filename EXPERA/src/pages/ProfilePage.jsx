@@ -4,7 +4,7 @@ import { Container } from "../components";
 function ProfilePage() {
   return (
     <Container>
-        <UserProfile/>
+      <UserProfile />
     </Container>
   )
 }
